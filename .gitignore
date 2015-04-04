@@ -61,11 +61,11 @@ bower_components
 # --------------------
 data/
 test/coverage/
-modules/public/
-modules/views/
+#modules/public/
+#modules/views/
 /public/build/
-/packages/custom/
-/packages/contrib/
+#/packages/custom/
+#/packages/contrib/
 
 # --------------------
 # vim Files
