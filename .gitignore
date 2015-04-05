@@ -13,4 +13,5 @@
 # --------------------
 scrape/data
 scrape/inserted
-
+scrape/insert.out
+scrape/output
