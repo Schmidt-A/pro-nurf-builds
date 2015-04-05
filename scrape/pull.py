@@ -6,7 +6,8 @@ import datetime
 import time
 import os
 
-APIKEY = 'c881ae04-2d79-46f4-8857-900a0ba71f5e'
+from apikey import *
+
 URLBASE = 'https://na.api.pvp.net/api/lol/na/v4.1/game/ids?beginDate='
 
 start = datetime.date(year=2015, month=4, day=1)

@@ -11,6 +11,7 @@
 # --------------------
 # data scraping data
 # --------------------
+scrape/apikey.py
 scrape/data
 scrape/inserted
 scrape/insert.out
