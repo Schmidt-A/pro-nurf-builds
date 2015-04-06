@@ -5,25 +5,34 @@
 </head>
 <body>
   <div class="container">
+
     <div class="header">
       <h1 class="text-center">Pro URF Builds</h1>
+      <hr>
       <div class="container-fluid">
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-4" style="padding-top:7px">
             <a href="#" class="btn btn-primary btn-large btn-block active">Champions</a>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-4" style="padding-top:7px">
             <a href="#" class="btn btn-primary btn-large btn-block">Items</a>
           </div>
           <div class="col-md-4">
             <form class="navbar-form navbar-left" role="search">
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search">
+                <input type="text" class="form-control" placeholder="search...">
               </div>
               <button type="submit" class="btn btn-default">Submit</button>
             </form>
           </div>
         </div>
+        <hr>
+      </div>
+
+
+      <div>
+        {% block body_block %}
+        {% endblock %}
       </div>
     </div>
 </body>
