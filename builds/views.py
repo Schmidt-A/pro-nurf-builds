@@ -1,5 +1,6 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, render
 from django.template import RequestContext
+from models import Post
 import urllib2
 import json
 
@@ -51,3 +52,13 @@ def index(request):
     print return_data
 
     return render_to_response('champions.html', {'data': return_data})
+
+
+
+def test(request):
+    post = Post.objects.create(title='test',
+                text='test text')
+    post.save()
+    Post.objects
+    data = Post.objects.to_json()
+    return render(request, 'test.html', {'data': data})

@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'prourfbuilds.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': '',
+        'ENGINE': 'django.db.backends.dummy',
     }
 }
 

@@ -5,3 +5,8 @@ from mongoengine import *
 
 class Game(Document):
     game_id = IntegerField()
+
+class Post(Document):
+    title = StringField()
+    text = StringField()
+
