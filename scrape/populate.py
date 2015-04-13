@@ -14,50 +14,102 @@ import time
 import threading
 import urllib2
 
+from riotwatcher import RiotWatcher
 
 from apikey import *
 
 DB = 'urf'
+DJANGODB = 'prourfbuilds'
 EXIT = False
 
 logging.basicConfig(filename='populate.log',
             format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
             level=logging.DEBUG)
 
-request_q = Queue.Queue()
+# set up logging to console
+"""
+console = logging.StreamHandler()
+console.setLevel(logging.DEBUG)
+formatter = logging.Formatter('%(asctime)s - %(message)s')
+console.setFormatter(formatter)
+logging.getLogger('').addHandler(console)
+"""
 
-def api_get(url):
+request_q = Queue.Queue()
+api = RiotWatcher(APIKEY)
+
+def api_get(req):
     data = None
-    logging.debug('getting: %s' % url)
+    logging.debug('getting: %s' % req['fn'].__name__)
+    while not api.can_make_request():
+        logging.debug('wait 0.5 second to make request')
+        time.sleep(0.5)
     try:
-        f = urllib2.urlopen(url)
-        data = f.read()
+        data = req['fn'](*req['args'], **req['kwargs'])
     except Exception as e:
         # TODO handle error code for rate limit and return it
         logging.info('exception getting:%s %s' % (url, e))
     return data
 
-def insert(coll, data):
-    logging.debug('insert into %s data len: %s' % (coll, len(data)))
-    #TODO
+def insert(collection, data):
+    logging.debug('insert into %s data len: %s' % (collection, len(json.dumps(data))))
+    conn = pymongo.Connection()
+    db = getattr(conn, DJANGODB)
+    coll = getattr(db, collection)
+    result = coll.insert(data)
+    logging.debug('insert returned %s' % result)
+    conn.disconnect()
 
 def request_thread():
     logging.debug('request thread started')
-    while not EXIT:
+    def main_is_alive():
+        for i in threading.enumerate():
+            if i.name == "MainThread":
+                return i.is_alive()
+
+    while not EXIT and main_is_alive():
         try:
-            coll, url = request_q.get_nowait()
+            req = request_q.get_nowait()
         except Queue.Empty as e:
             time.sleep(2)
             continue
-        data = api_get(url)
+        data = api_get(req)
         if data is not None:
-            insert(col, data)
-        time.sleep(2)
+            insert(req['coll'], data)
+        time.sleep(1)
     logging.debug('thread exiting')
 
-def watch_games():
-    #TODO logic to query mongo and make request jobs
-    pass
+def is_match_downloaded(matchid):
+    found = False
+    conn = pymongo.Connection()
+    coll = getattr(conn, DJANGODB).match
+    if coll.find_one({'matchId': matchid}):
+        found = True
+    conn.disconnect()
+    return found
+
+def process_games():
+    conn = pymongo.Connection()
+    coll = conn.urf.game
+
+    logging.debug('process_games before query')
+    # look at one game entry at a time
+    game = coll.find_one({'processed': {'$exists': False}})
+    if game:
+        processed_already = True
+        for g in game['games']:
+            if not is_match_downloaded(g):
+                processed_already = False
+                request_q.put({'coll': 'match',
+                                  'fn': api.get_match,
+                                  'args': [g],
+                                  'kwargs': {'include_timeline': True}})
+        if processed_already:
+            conn.urf.game.update({'_id': game['_id']}, {'$set': {'processed':
+                True}})
+            logging.debug('marking game id %s as processed' % (game['_id']))
+    logging.debug('request q size: %s' % request_q.qsize())
+    conn.disconnect()
 
 def main():
     # setup request thread
@@ -66,10 +118,10 @@ def main():
 
     # watch the mongo collections for new data to populate
     while True:
-
+        process_games()
         logging.info('request queue size: %s' % request_q.qsize())
         # wait between iterations
-        time.sleep(90)
+        time.sleep(30)
 
 
 if __name__ == '__main__':
