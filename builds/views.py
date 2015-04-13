@@ -8,10 +8,11 @@ import json
 
 from collections import OrderedDict
 
+from apikey import APIKEY
+
 def index(request):
-    key = 'c881ae04-2d79-46f4-8857-900a0ba71f5e'
     urlbase= 'https://na.api.pvp.net/api/lol/static-data/na/v1.2/champion?champData=image,info'
-    url = '%s&api_key=%s' % (urlbase, key)
+    url = '%s&api_key=%s' % (urlbase, APIKEY)
 
     ddragon_ver_url = 'http://ddragon.leagueoflegends.com/realms/na.json'
     ddragon_img_base = 'http://ddragon.leagueoflegends.com/cdn/{0}/img/champion/{1}'

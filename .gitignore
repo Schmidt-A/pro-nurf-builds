@@ -17,3 +17,5 @@ scrape/inserted
 scrape/insert.out
 scrape/output
 scrape/populate.log
+
+builds/apikey.py
