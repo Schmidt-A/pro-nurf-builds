@@ -2,46 +2,23 @@ from django.shortcuts import render_to_response, render
 from django.template import RequestContext
 from models import Post
 
-import math
-import urllib2
 import json
+import math
+import requests
 
 from collections import OrderedDict
 
 from apikey import APIKEY
+from lib import ddragon
 
 def index(request):
-    urlbase= 'https://na.api.pvp.net/api/lol/static-data/na/v1.2/champion?champData=image,info'
-    url = '%s&api_key=%s' % (urlbase, APIKEY)
-
-    ddragon_ver_url = 'http://ddragon.leagueoflegends.com/realms/na.json'
-    ddragon_img_base = 'http://ddragon.leagueoflegends.com/cdn/{0}/img/champion/{1}'
+    url_base= 'https://na.api.pvp.net/api/lol/static-data/na/v1.2/champion'
+    payload = {'champData': 'image,info', 'api_key': APIKEY}
 
     return_data = {}
 
-    # Get most recent data dragon version
-    try:
-        f = urllib2.urlopen(ddragon_ver_url)
-        ddata = f.read()
-        ddata = json.loads(ddata)
-        ddragon_ver = ddata['v']
-    except Exception as e:
-        print 'DataDragon Exception:', e
-        ddragon_ver = None
-
-    if not ddragon_ver:
-        # TODO: make an error page for this.
-        return render_to_response('champions.html')
-
-
-    try:
-        f = urllib2.urlopen(url)
-        data = f.read()
-        data = json.loads(data)
-    except Exception as e:
-        print 'Exception:', e
-        print 'url:', url
-        data = None
+    r = requests.get(url_base, params=payload)
+    data = r.json()
 
     if not data:
         # TODO: make an error page for this.
@@ -50,13 +27,13 @@ def index(request):
     c_list = data['data']
     for champ_id, champ_info in c_list.iteritems():
         name = c_list[champ_id]['name']
-        image = c_list[champ_id]['image']['full']
-        img_url = ddragon_img_base.format(ddragon_ver, image)
+        img_url = ddragon.champ_icon_url(c_list[champ_id]['image']['full'])
         return_data[name] = {'img_url': img_url}
 
     sorted_data = OrderedDict(sorted(return_data.items()))
 
     return render_to_response('champions.html', {'data': sorted_data})
+
 
 def test(request):
     post = Post.objects.create(title='test',
