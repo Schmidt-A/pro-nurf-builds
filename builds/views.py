@@ -54,11 +54,8 @@ def index(request):
         return_data[name] = {'img_url': img_url}
 
     sorted_data = OrderedDict(sorted(return_data.items()))
-    rows = int(math.ceil(len(sorted_data) / 5))
 
-    return render_to_response('champions.html', {'data': return_data})
-
-
+    return render_to_response('champions.html', {'data': sorted_data})
 
 def test(request):
     post = Post.objects.create(title='test',
