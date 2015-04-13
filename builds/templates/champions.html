@@ -1,11 +1,16 @@
 {% extends 'base.html' %}
-
 {% block body_block %}
+
 <h2>Champions</h2>
 
-<ul>
+<ul class="row text-center urf-row">
   {% for key, value in data.items %}
-  <li><img src="{{ value.img_url }}"/></li>
+  <li class="col-sm-3 urf-li">
+    <div>
+    <img id="champ_img" class="img" src="{{ value.img_url }}"/>
+    <p>{{ key }}</p>
+    </div>
+  </li>
   {% endfor %}
 </ul>
 {% endblock %}

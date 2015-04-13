@@ -1,20 +1,22 @@
 <html>
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 {% load staticfiles %}
 <link rel="stylesheet" href="{% static 'css/bootstrap-lumen.css' %}">
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
+<link rel="stylesheet" href="{% static 'css/menus.css' %}">
+<script src="{% static 'js/menus.js' %}"></script>
 </head>
 <body>
+  <center><img src="http://i.imgur.com/9fnCQWr.png" class="img-responsive"></img></center>
   <div class="container">
-
     <div class="header">
-      <h1 class="text-center">Pro URF Builds</h1>
-      <hr>
       <div class="container-fluid">
         <div class="row">
-          <div class="col-md-4" style="padding-top:7px">
+          <div class="col-md-4 urf-menu-button">
             <a href="#" class="btn btn-primary btn-large btn-block active">Champions</a>
           </div>
-          <div class="col-md-4" style="padding-top:7px">
+          <div class="col-md-4 urf-menu-button">
             <a href="#" class="btn btn-primary btn-large btn-block">Items</a>
           </div>
           <div class="col-md-4">
@@ -28,8 +30,6 @@
         </div>
         <hr>
       </div>
-
-
       <div>
         {% block body_block %}
         {% endblock %}

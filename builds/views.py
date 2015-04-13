@@ -1,8 +1,12 @@
 from django.shortcuts import render_to_response, render
 from django.template import RequestContext
 from models import Post
+
+import math
 import urllib2
 import json
+
+from collections import OrderedDict
 
 def index(request):
     key = 'c881ae04-2d79-46f4-8857-900a0ba71f5e'
@@ -21,7 +25,7 @@ def index(request):
         ddata = json.loads(ddata)
         ddragon_ver = ddata['v']
     except Exception as e:
-        print 'Exception:', e
+        print 'DataDragon Exception:', e
         ddragon_ver = None
 
     if not ddragon_ver:
@@ -49,7 +53,8 @@ def index(request):
         img_url = ddragon_img_base.format(ddragon_ver, image)
         return_data[name] = {'img_url': img_url}
 
-    print return_data
+    sorted_data = OrderedDict(sorted(return_data.items()))
+    rows = int(math.ceil(len(sorted_data) / 5))
 
     return render_to_response('champions.html', {'data': return_data})
 
