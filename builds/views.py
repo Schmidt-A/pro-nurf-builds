@@ -35,6 +35,10 @@ def index(request):
     return render_to_response('champions.html', {'data': sorted_data})
 
 
+def champ_info(request, champ_name):
+    return render_to_response('champ_info.html', {'data': champ_name})
+
+
 def test(request):
     post = Post.objects.create(title='test',
                 text='test text')

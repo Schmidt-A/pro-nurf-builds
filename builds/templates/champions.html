@@ -7,8 +7,10 @@
   {% for key, value in data.items %}
   <li class="col-sm-2 urf-li">
     <div>
-    <img id="champ_img" class="img" src="{{ value.img_url }}"/>
-    <p>{{ key }}</p>
+      <a href="{% url 'champ_info' key %}">
+        <img class="img img-thumbnail" src="{{ value.img_url }}"/>
+        <p>{{ key }}</p>
+      </a>
     </div>
   </li>
   {% endfor %}
