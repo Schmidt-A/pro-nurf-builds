@@ -12,7 +12,6 @@ import Queue
 import sys
 import time
 import threading
-import urllib2
 
 from riotwatcher import RiotWatcher
 
@@ -36,6 +35,7 @@ logging.getLogger('').addHandler(console)
 """
 
 request_q = Queue.Queue()
+queue_ids = []
 api = RiotWatcher(APIKEY)
 
 def api_get(req):
@@ -89,7 +89,9 @@ def is_match_downloaded(matchid):
     return found
 
 def process_games():
-    conn = pymongo.Connection()
+    global queue_ids
+    conn = pymongo.MongoClient()
+    conn.write_concern = {'w': 1}
     coll = conn.urf.game
 
     logging.debug('process_games before query')
@@ -98,16 +100,18 @@ def process_games():
     if game:
         processed_already = True
         for g in game['games']:
-            if not is_match_downloaded(g):
+            if not is_match_downloaded(g) and g not in queue_ids:
                 processed_already = False
                 request_q.put({'coll': 'match',
                                   'fn': api.get_match,
                                   'args': [g],
                                   'kwargs': {'include_timeline': True}})
+                queue_ids.append(g)
         if processed_already:
-            conn.urf.game.update({'_id': game['_id']}, {'$set': {'processed':
-                True}})
             logging.debug('marking game id %s as processed' % (game['_id']))
+            result = coll.update({'_id': game['_id']}, {'$set': {'processed':
+                True}}, fsync=True)
+            logging.debug('update result: %s' % result)
     logging.debug('request q size: %s' % request_q.qsize())
     conn.disconnect()
 
