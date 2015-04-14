@@ -1,5 +1,16 @@
 {% extends 'base.html' %}
 {% block body_block %}
 
-<h2>{{ data }}</h2>
+<h2 class="champ_header">{{ name }} - {{ title }}</h2>
+<ul class = "row urf-row">
+  <li class="col-sm-4 urf-li">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <img class="img-thumbnail champ_img" src="{{ img_url }}"/>
+        <div>
+        </div>
+      </div>
+    </div>
+  </li>
+
 {% endblock %}

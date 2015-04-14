@@ -85,6 +85,12 @@ DATABASES = {
     }
 }
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        }
+    }
+
 SESSION_ENGINE = 'mongoengine.django.sessions'
 
 # Internationalization
