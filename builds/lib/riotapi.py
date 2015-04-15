@@ -9,7 +9,7 @@ URL_BASE = 'https://na.api.pvp.net/api/lol/static-data/na/v1.2/{0}'
 
 @cached(60*60)
 def champs_data():
-    payload = {'champData': 'image,info', 'api_key': APIKEY}
+    payload = {'champData': 'altimages,image,info', 'api_key': APIKEY}
     url = URL_BASE.format('champion')
 
     r = requests.get(url, params=payload)

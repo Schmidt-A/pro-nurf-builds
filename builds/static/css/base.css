@@ -1,14 +1,28 @@
 .urf-menu-button{
-	padding-top:7px;
+    padding-top:7px;
+}
+
+.urf-tab-content{
+    padding-top: 10px;
 }
 
 .hidden{
-	display:none;
+    display:none;
 }
 
 .champ_img{
+    margin-bottom:10px;
 }
 
 .champ_header{
     padding-left:20px;
+}
+
+.champ_stats{
+    margin-left:-10;
+    margin-right:-5;
+}
+
+.champ_progress{
+    margin-bottom:0;
 }

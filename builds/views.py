@@ -4,7 +4,7 @@ from models import Post
 
 from collections import OrderedDict
 
-from lib import ddragon, riotapi
+from lib import data, ddragon, riotapi
 
 def index(request):
     return_data = {}
@@ -32,12 +32,21 @@ def index(request):
 def champ_info(request, name):
     champ = riotapi.champ_data(name)
     title = champ['title']
-    loading_url = ddragon.champ_loading_url(name)
+    loading_url = ddragon.champ_loading_url(champ['key'])
+    winrate = data.get_winrate(champ['id'])
+    pickrate = data.get_pickrate(champ['id'])
+    banrate = data.get_banrate(champ['id'])
+    builds = data.get_builds(champ['id'])
+
     return render_to_response('champ_info.html',
             {
                 'name': name,
                 'title': title,
-                'img_url': loading_url
+                'img_url': loading_url,
+                'winrate': winrate,
+                'pickrate': pickrate,
+                'banrate': banrate,
+                'builds': builds
             })
 
 
