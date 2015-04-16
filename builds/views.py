@@ -37,6 +37,7 @@ def champ_info(request, name):
     pickrate = data.get_pickrate(champ['id'])
     banrate = data.get_banrate(champ['id'])
     builds = data.get_builds(champ['id'])
+    items = data.get_items(champ['id'])
 
     return render_to_response('champ_info.html',
             {
@@ -46,7 +47,8 @@ def champ_info(request, name):
                 'winrate': winrate,
                 'pickrate': pickrate,
                 'banrate': banrate,
-                'builds': builds
+                'builds': builds,
+                'items': items
             })
 
 
