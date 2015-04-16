@@ -3,7 +3,7 @@
 }
 
 .urf-tab-content{
-    padding-top: 10px;
+    padding-top: 0px;
 }
 
 .hidden{
@@ -17,6 +17,10 @@
 .champ_header{
     padding-left:20px;
     text-transform: uppercase;
+}
+
+.champ_panel{
+    border-top-width: 1px;
 }
 
 .champ_stats{
