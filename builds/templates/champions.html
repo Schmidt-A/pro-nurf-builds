@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block body_block %}
 
 <div class="jumbotron">
-  <p>Welcome to prourfbuilds. We've gathered data from # real urf games to bring you statistically-backed, infallible champion builds. Go boldly into the future and dominate on any champion with these ultimate builds.</p>
+  <p>Welcome to prourfbuilds. We've gathered data from <span id="counter" class="urf_counter" value=800000>000000</span> real urf games to bring you statistically-backed, infallible champion builds. Go boldly into the future and dominate on any champion with these ultimate builds.</p>
 </div>
 <hr>
 
@@ -20,4 +21,7 @@
   </li>
   {% endfor %}
 </ul>
+{% endblock %}
+{% block child_js %}
+<script src="{% static 'js/champions.js' %}"></script>
 {% endblock %}
