@@ -53,12 +53,12 @@ def api_get(req):
 
 def insert(collection, data):
     logging.debug('insert into %s data len: %s' % (collection, len(json.dumps(data))))
-    conn = pymongo.Connection()
+    conn = pymongo.MongoClient()
     db = getattr(conn, DJANGODB)
     coll = getattr(db, collection)
     result = coll.insert(data)
     logging.debug('insert returned %s' % result)
-    conn.disconnect()
+    conn.close()
 
 def request_thread():
     logging.debug('request thread started')
@@ -81,17 +81,16 @@ def request_thread():
 
 def is_match_downloaded(matchid):
     found = False
-    conn = pymongo.Connection()
+    conn = pymongo.MongoClient()
     coll = getattr(conn, DJANGODB).match
     if coll.find_one({'matchId': matchid}):
         found = True
-    conn.disconnect()
+    conn.close()
     return found
 
 def process_games():
     global queue_ids
     conn = pymongo.MongoClient()
-    conn.write_concern = {'w': 1}
     coll = conn.urf.game
 
     logging.debug('process_games before query')
@@ -109,11 +108,11 @@ def process_games():
                 queue_ids.append(g)
         if processed_already:
             logging.debug('marking game id %s as processed' % (game['_id']))
-            result = coll.update({'_id': game['_id']}, {'$set': {'processed':
-                True}}, fsync=True)
+            result = coll.update_one({'_id': game['_id']}, {'$set': {'processed':
+                True}})
             logging.debug('update result: %s' % result)
     logging.debug('request q size: %s' % request_q.qsize())
-    conn.disconnect()
+    conn.close()
 
 def main():
     # setup request thread

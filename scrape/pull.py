@@ -16,7 +16,7 @@ now = int(time.time())
 #print epoch
 curr = epoch
 
-curr = 1427993700  + 300
+curr = 1428892500 + 300
 #while curr < now:
 while True:
     url = '%s%d&api_key=%s' % (URLBASE, curr, APIKEY)
@@ -34,8 +34,13 @@ while True:
         with open('data/%s' % curr, 'w') as f:
             f.write(data)
         print '%s  wrote %s, data: %s' % (time.strftime("%I:%M:%S"), curr, len(data))
+    else:
+        print 'data is none for %s' % curr
+        time.sleep(290)
 
-    time.sleep(300)
-    curr = curr + 300   # 5 minutes
+
+    time.sleep(10)
+    if data is not None:
+        curr = curr + 300   # 5 minutes
 
 

@@ -13,7 +13,7 @@ path = 'data'
 dest = 'inserted'
 
 while True:
-    conn = pymongo.Connection()
+    conn = pymongo.MongoClient()
     coll = conn.urf.game
     for root, dirs, files in os.walk(path):
         for f in files:
@@ -22,9 +22,9 @@ while True:
                 data = handle.read()
             if data is not None:
                 data = '{"games": %s}' % data
-                print coll.insert(json.loads(data))
+                print coll.insert_one(json.loads(data))
                 os.rename(os.path.join(path, f), os.path.join(dest, f))
-    conn.disconnect()
+    conn.close()
     time.sleep(300)
 
 
