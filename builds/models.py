@@ -10,3 +10,7 @@ class Post(Document):
     title = StringField()
     text = StringField()
 
+class Champion(DynamicDocument):
+    meta = {
+            'collection': 'champion',
+            }

@@ -1,6 +1,6 @@
 from django.shortcuts import render_to_response, render
 from django.template import RequestContext
-from models import Post
+from models import Champion
 
 from collections import OrderedDict
 
@@ -53,9 +53,6 @@ def champ_info(request, name):
 
 
 def test(request):
-    post = Post.objects.create(title='test',
-                text='test text')
-    post.save()
-    Post.objects
-    data = Post.objects.to_json()
-    return render(request, 'test.html', {'data': data})
+    #data = Champion.objects.to_json()
+    chmp = data.get_champion(1).to_json()
+    return render(request, 'test.html', {'data': chmp})

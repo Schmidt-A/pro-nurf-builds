@@ -122,15 +122,15 @@ reducefn = '''
     }
 ''' % doc
 
-map_results = m.map_reduce(mapfn, reducefn, 'map_results', full_response=True,
+map_results = m.map_reduce(mapfn, reducefn, 'champion', full_response=True,
         limit=None)
 
 print map_results
 
 import pprint
-for d in c.prourfbuilds.map_results.find():
+for d in c.prourfbuilds.champion.find():
     pprint.pprint(d)
 
-print c.prourfbuilds.map_results.count()
+print c.prourfbuilds.champion.count()
 
 
