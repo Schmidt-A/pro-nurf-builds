@@ -16,6 +16,7 @@
 
 .champ_header{
     padding-left:20px;
+    text-transform: uppercase;
 }
 
 .champ_stats{
@@ -25,4 +26,9 @@
 
 .champ_progress{
     margin-bottom:0;
+}
+
+.progress .progress-bar{
+    -webkit-transition: none !important;
+    transition: none !important;
 }

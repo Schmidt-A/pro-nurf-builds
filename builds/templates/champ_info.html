@@ -2,7 +2,7 @@
 {% load staticfiles %}
 {% block body_block %}
 
-<h2 class="champ_header">{{ name }} - {{ title }}</h2>
+<a name="anchor" id="anchor"><h2 class="champ_header">{{ name }} - {{ title }}</h2></a>
 
 <ul class = "row urf-row">
   <li class="col-sm-4 urf-li">
@@ -16,7 +16,7 @@
           </div>
           <div class="col-md-8">
             <div class="progress champ_progress" rel="tooltip" data-original-title="{{pickrate}}%">
-              <div class="progress-bar progress-bar-info" style="width: {{pickrate}}%"></div>
+              <div class="progress-bar progress-bar-info" value="{{pickrate}}%" style="width: 0%"></div>
             </div>
           </div>
         </div>
@@ -27,7 +27,7 @@
           </div>
           <div class="col-md-8">
             <div class="progress champ_progress" rel="tooltip" data-original-title="{{winrate}}%">
-              <div class="progress-bar progress-bar-success" style="width: {{winrate}}%"></div>
+              <div class="progress-bar progress-bar-success" value="{{winrate}}%" style="width: 0%"></div>
             </div>
           </div>
         </div>
@@ -38,7 +38,7 @@
           </div>
           <div class="col-md-8">
             <div class="progress champ_progress" rel="tooltip" data-original-title="{{banrate}}%">
-              <div class="progress-bar progress-bar-danger" style="width: {{banrate}}%"></div>
+              <div class="progress-bar progress-bar-danger" value="{{banrate}}%" style="width: 0%"></div>
             </div>
           </div>
         </div>
@@ -49,8 +49,8 @@
   <li class="col-sm-8 urf-li">
 
     <ul class="nav nav-tabs">
-      <li class="active"><a href="#overview" data-toggle="tab" aria-expanded="true">OVERVIEW</a></li>
-      <li class=""><a href="#items" data-toggle="tab" aria-expanded="true">ITEM BREAKDOWN</a></li>
+      <li class="active"><a class="urf-tab-link" href="#overview" data-toggle="tab" aria-expanded="true">OVERVIEW</a></li>
+      <li class=""><a class="urf-tab-link" href="#items" data-toggle="tab" aria-expanded="true">ITEM BREAKDOWN</a></li>
     </ul>
 
     <div id="urf-tab-div" class="tab-content urf-tab-content">
@@ -78,7 +78,7 @@
       </div>
 
       <div class="tab-pane fade" id="items">
-        <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
+        <p style='font-size:96px;'>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
       </div>
 
     </div>
