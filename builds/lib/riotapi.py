@@ -31,17 +31,19 @@ def champ_data(name):
     return champ_info(name)[0]
 
 @cached(60*60)
+def items_data():
+    payload = {'itemData': 'groups,image,tags', 'api_key': APIKEY}
+    url = URL_BASE.format('item')
+
+    r = requests.get(url, params=payload)
+    return r.json()['data']
+
 def item_data(item_id):
+    data = items_data()[item_id]
+
     item = {}
     item['id'] = item_id
     item['type'] = TYPE_GENERAL
-
-    payload = {'itemData': 'all', 'api_key': APIKEY}
-    url_item = 'item/' + str(item_id)
-    url = URL_BASE.format(url_item)
-
-    r = requests.get(url, params=payload)
-    data = r.json()
 
     # Check item type... Really messy because the API data is messy.
     if 'tags' in data:
