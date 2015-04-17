@@ -6,6 +6,9 @@ from apikey import APIKEY
 import ddragon
 
 URL_BASE = 'https://na.api.pvp.net/api/lol/static-data/na/v1.2/{0}'
+TYPE_BOOT = 'Boots'
+TYPE_TRINKET = 'Trinket'
+TYPE_GENERAL = 'General'
 
 @cached(60*60)
 def champs_data():
@@ -26,3 +29,30 @@ def champ_data(name):
     # Get info by name
     champ_info = lambda x: [data[cid] for cid in data if data[cid]['name'] == x]
     return champ_info(name)[0]
+
+@cached(60*60)
+def item_data(item_id):
+    item = {}
+    item['id'] = item_id
+    item['type'] = TYPE_GENERAL
+
+    payload = {'itemData': 'all', 'api_key': APIKEY}
+    url_item = 'item/' + str(item_id)
+    url = URL_BASE.format(url_item)
+
+    r = requests.get(url, params=payload)
+    data = r.json()
+
+    # Check item type... Really messy because the API data is messy.
+    if 'tags' in data:
+        if 'Boots' in data['tags']:
+            item['type'] = TYPE_BOOT
+        elif 'Trinket' in data['tags']:
+            item['type'] = TYPE_TRINKET
+    elif 'group' in data:
+        if str(data['group']).startswith('Boots'):
+            item['type'] = TYPE_BOOT
+
+    item['desc'] = data['description']
+
+    return item
