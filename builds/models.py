@@ -19,3 +19,10 @@ class Match(DynamicDocument):
     meta = {
             'collection': 'match',
             }
+
+class Bans(DynamicDocument):
+    meta = {
+            'collection': 'bans',
+            }
+
+

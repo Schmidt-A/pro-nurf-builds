@@ -51,9 +51,3 @@ def champ_info(request, name):
                 'items': items
             })
 
-
-def test(request):
-    #data = Champion.objects.to_json()
-    #chmp = data.get_champion(103).to_json()
-    chmp = data.get_total_matches()
-    return render(request, 'test.html', {'data': chmp})

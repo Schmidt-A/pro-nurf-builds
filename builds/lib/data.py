@@ -16,6 +16,11 @@ def get_champion(champ_id):
     return data.first()
 
 @cached(60*60)
+def get_bans(champ_id):
+    data = models.Bans.objects(value__championId=champ_id)
+    return data.first()
+
+@cached(60*60)
 def get_total_matches():
     data = models.Match.objects().count()
     return data
@@ -96,7 +101,9 @@ def get_winrate(champ_id):
     return int(champ['value']['win'] / champ['value']['games'] * 100.0)
 
 def get_banrate(champ_id):
-    return 69
+    total = get_total_matches()
+    bans = get_bans(champ_id)
+    return int(bans['value']['games'] / total * 100.0)
 
 def sorted_values(to_sort, reverse=False):
     return sorted(to_sort, key=to_sort.get, reverse=reverse)
@@ -120,45 +127,66 @@ def print_item(items, data, built, msg=None):
         print '%s : %s  built: %s' % (i, data[i], built[i])
     print '---'
 
+def filter_boots(items):
+    ''' only the first set of boots allowed '''
+    new = []
+    no_more_boots = False
+    for i in items:
+        if i['type'] == riotapi.TYPE_BOOT:
+            if no_more_boots:
+                continue
+            else:
+                no_more_boots = True
+        new.append(i)
+    return new
+
 def victorious_build(data, items):
-    # process the build here.
-    d = data['value']
     sorted_items = sorted(items, key=lambda x: x['winrate'], reverse=True)
+    sorted_items = filter_boots(sorted_items)
     return sorted_items[0:6]
 
 def loser_build(data, items):
     sorted_items = sorted(items, key=lambda x: x['winrate'], reverse=False)
+    sorted_items = filter_boots(sorted_items)
     return sorted_items[0:6]
 
 def guest_list_mvp_build(data, items):
     sorted_items = sorted(items, key=lambda x: x['buyrate'], reverse=True)
+    sorted_items = filter_boots(sorted_items)
     return sorted_items[0:6]
 
 def hhey_what_about_me_build(data, items):
     sorted_items = sorted(items, key=lambda x: x['buyrate'], reverse=False)
+    sorted_items = filter_boots(sorted_items)
     return sorted_items[0:6]
 
 def bloodiest_build(data, items):
     sorted_items = sorted(items, key=lambda x: x['ifirst_blood'], reverse=True)
+    sorted_items = filter_boots(sorted_items)
     return sorted_items[0:6]
 
 def i_am_become_urfdeath_build(data, items):
     sorted_items = sorted(items, key=lambda x: x['ikills'], reverse=True)
+    sorted_items = filter_boots(sorted_items)
     return sorted_items[0:6]
 
 def seppuku_build(data, items):
     sorted_items = sorted(items, key=lambda x: x['ideaths'], reverse=True)
+    sorted_items = filter_boots(sorted_items)
     return sorted_items[0:6]
 
 def team_hero_build(data, items):
     sorted_items = sorted(items, key=lambda x: x['iassists'], reverse=True)
+    sorted_items = filter_boots(sorted_items)
     return sorted_items[0:6]
 
 def am_i_not_merciful_build(data, items):
     sorted_items = sorted(items, key=lambda x: x['ikills'], reverse=False)
+    sorted_items = filter_boots(sorted_items)
     return sorted_items[0:6]
 
 def immortal_build(data, items):
     sorted_items = sorted(items, key=lambda x: x['ideaths'], reverse=False)
+    sorted_items = filter_boots(sorted_items)
     return sorted_items[0:6]
 
