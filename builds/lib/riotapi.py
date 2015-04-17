@@ -54,5 +54,6 @@ def item_data(item_id):
             item['type'] = TYPE_BOOT
 
     item['desc'] = data['description']
+    item['name'] = data['name']
 
     return item
