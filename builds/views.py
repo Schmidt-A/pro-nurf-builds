@@ -54,5 +54,5 @@ def champ_info(request, name):
 
 def test(request):
     #data = Champion.objects.to_json()
-    chmp = data.get_champion(1).to_json()
+    chmp = data.get_champion(103).to_json()
     return render(request, 'test.html', {'data': chmp})

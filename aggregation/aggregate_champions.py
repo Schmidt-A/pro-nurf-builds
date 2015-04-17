@@ -32,6 +32,8 @@ doc = '''
 mapfn = '''
     function() {
         item_names = [];
+        function pad(a,b){return(1e15+a+"").slice(-b)};
+
         for (i=0; i<7; i++) { item_names.push('item' + i); };
 
         // populate doc with participant info (p)
@@ -77,7 +79,7 @@ mapfn = '''
         for (i=0; i<this.participants.length; i++) {
             p = this.participants[i];
             d = populate_doc(p, this);
-            emit(p.championId, d);
+            emit("000000000000" + pad(p.championId,12), d);
         }
     }
 ''' % doc
@@ -101,7 +103,7 @@ reducefn = '''
         // aggregate the values within the doc
         for (i=0; i<values.length; i++) {
             v = values[i];
-            doc.championId = key;
+            doc.championId = v.championId;
             doc.games += v.games;
             doc.win += v.win;
             doc.loss += v.loss;
@@ -127,9 +129,9 @@ map_results = m.map_reduce(mapfn, reducefn, 'champion', full_response=True,
 
 print map_results
 
-import pprint
-for d in c.prourfbuilds.champion.find():
-    pprint.pprint(d)
+#import pprint
+#for d in c.prourfbuilds.champion.find():
+#    pprint.pprint(d)
 
 print c.prourfbuilds.champion.count()
 

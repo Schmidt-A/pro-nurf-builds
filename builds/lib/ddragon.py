@@ -34,3 +34,4 @@ def champ_loading_url(champ_name):
 
 def item_url(item_img):
     return ITEM_BASE_URL.format(VERSION, item_img)
+

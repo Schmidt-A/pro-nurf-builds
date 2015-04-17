@@ -14,3 +14,8 @@ class Champion(DynamicDocument):
     meta = {
             'collection': 'champion',
             }
+
+class Match(DynamicDocument):
+    meta = {
+            'collection': 'match',
+            }
