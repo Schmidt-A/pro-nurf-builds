@@ -71,3 +71,11 @@
 .urf_counter{
     font-weight: bold;
 }
+
+.item_tooltip > .tooltip-inner {
+    text-align:left;
+    max-width: 300px;
+    min-width: 300px;
+}
+
+

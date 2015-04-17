@@ -63,14 +63,14 @@
             {% for build in builds %}
             <div class="row">
               <div class="col-md-3">
-                <img rel="tooltip" data-original-title="{{build.desc}}" src="{% static build.icon %}"></img>
+                <img class="build_icon" rel="tooltip" data-original-title="{{build.desc}}" src="{% static build.icon %}"></img>
               </div>
               <div class="col-md-9">
                 <div class="panel panel-primary">
                   <div class="panel-heading" rel="tooltip" data-original-title="{{build.desc}}">{{ build.name }}</div>
                   <div class="panel-body text-center">
                     {% for item in build.items %}
-                    <img class="img-thumbnail" src="{{ item }}"></img>
+                    <img class="img-thumbnail item_icon" rel="tooltip" i_name="{{item.name}}" i_desc="{{item.desc}}" data-original-title="" src="{{ item.img_url }}"></img>
                     {% endfor %}
                   </div>
                 </div>
@@ -97,7 +97,7 @@
                 <td>
                   <div>
                   <div class="urf_table_img_container">
-                    <img src={{item.img_url}} class="urf_table_img"></img>
+                    <img src={{item.img_url}} i_name="{{item.name}}" i_desc="{{item.desc}}" class="urf_table_img item_icon"></img>
                   </div>
                   <p class="urf_table_name">{{item.name}}</p>
                 </div>
