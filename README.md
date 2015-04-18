@@ -31,6 +31,9 @@ A few utility scripts can be found in builds/lib/
  - ddragon.py - little API to get static images from Riot's Data Dragon service
  - riotapi.py - tiny API to run pertinent Riot API requests
 
+The app also expects there to be a python file named apikey.py under builds/lib/ with the following content:
+> APIKEY = [your riot api key]
+
 ### Future
 Due to timing, the front end CSS and templates are definitely not as clean as they could be. Refining those would make the app much more scaleable.
 
