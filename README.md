@@ -22,7 +22,18 @@ MongoDB and pip must be installed. The following python modules must be installe
 > sudo pip install django pymongo==2.8 mongoengine django-cache-utils RiotWatcher requests django-bootstrap3
 
 ## Front-End
+
+### TL;DR
 Pro Urf Builds uses the Django web framework and Bootstrap css/js framework. The website art was created with Paint.NET.
+
+A few utility scripts can be found in builds/lib/
+data.py - translates back-end data into front-end friendly dictionaries
+ddragon.py - little API to get static images from Riot's Data Dragon service
+riotapi.py - tiny API to run pertinent Riot API requests
+
+### Future
+Due to timing, the front end CSS and templates are definitely not as clean as they could be. Refining those would make the app much more scaleable.
+
 
 ## Back-End
 
@@ -40,4 +51,3 @@ Using MongoDb's mapReduce aggregation the match data was combined by champion an
 
 ### Future
 The data collection scripts need a rewrite into a clean service or cron command which in turn could trigger the aggregation.  Aggregation on an ongoing basis could be modified to use an incremental approach.
-
