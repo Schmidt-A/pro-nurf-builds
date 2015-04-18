@@ -27,9 +27,9 @@ MongoDB and pip must be installed. The following python modules must be installe
 Pro Urf Builds uses the Django web framework and Bootstrap css/js framework. The website art was created with Paint.NET.
 
 A few utility scripts can be found in builds/lib/
-data.py - translates back-end data into front-end friendly dictionaries
-ddragon.py - little API to get static images from Riot's Data Dragon service
-riotapi.py - tiny API to run pertinent Riot API requests
+ - data.py - translates back-end data into front-end friendly dictionaries
+ - ddragon.py - little API to get static images from Riot's Data Dragon service
+ - riotapi.py - tiny API to run pertinent Riot API requests
 
 ### Future
 Due to timing, the front end CSS and templates are definitely not as clean as they could be. Refining those would make the app much more scaleable.
@@ -41,9 +41,9 @@ Due to timing, the front end CSS and templates are definitely not as clean as th
 A series of quick and dirty python scripts retrieved the URF games from the URF endpoint
 
 scrape/
-pull.py - periodically pulled the gameid data from the challenge endpoint
-insert.py - insert the json files from pull.py and insert them into mongodb
-populate.py - watch the games collection in mongo and populate the match collection
+ - pull.py - periodically pulled the gameid data from the challenge endpoint
+ - insert.py - insert the json files from pull.py and insert them into mongodb
+ - populate.py - watch the games collection in mongo and populate the match collection
               using the match API endpoint with RiotWatcher api library
 
 ### Aggregation
