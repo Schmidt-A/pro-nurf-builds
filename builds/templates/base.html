@@ -14,33 +14,41 @@
 <body>
   <center><a href="{% url 'index' %}"><img src="{% static 'img/logo.png' %}" class="img-responsive"></img></a></center>
   <div class="container">
-    <div class="header">
-      <div class="container-fluid">
-        <div class="row hidden">
-          <div class="col-md-4 urf-menu-button">
-            <a href="#" class="btn btn-primary btn-large btn-block active">Champions</a>
-          </div>
-          <div class="col-md-4 urf-menu-button">
-            <a href="#" class="btn btn-primary btn-large btn-block">Items</a>
-          </div>
-          <div class="col-md-4">
-            <form class="navbar-form navbar-left" role="search">
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="search...">
-              </div>
-              <button type="submit" class="btn btn-default">Submit</button>
-            </form>
-          </div>
-        </div>
         <hr>
-      </div>
       <div>
         {% block body_block %}
         {% endblock %}
       </div>
+  </div>
+  {% block child_js %}
+  {% endblock %}
+
+  <div class="modal fade" id="about" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">About</h4>
+        </div>
+        <div class="modal-body">
+          Pro Urf Builds was written for the <a href="https://developer.riotgames.com/discussion/riot-games-api/show/bX8Z86bm">Riot API Challenge</a> in April 2015.
+          <br>
+
+          Written by Allisa "Tweeks" Schmidt and Russ "Best Bronze" Milne.
+          <br><br>
+          Code can be found on our <a href="https://github.com/Schmidt-A/pro-nurf-builds">Github repo</a>
+        </div>
+      </div>
     </div>
-    {% block child_js %}
-    {% endblock %}
+  </div>
+
+  <footer class="urf_footer">
+    <div class="container urf_footer">
+      <div class="urf_footer_body pull-right">
+        <p class="urf_footer_text">&copy; prourfbuilds</p><a href="#" id="about_link" class="urf_footer_text" data-toggle="modal" data-target"#about">about</a>
+      </div>
+    </div>
+  </footer>
 </body>
 
 </html>
