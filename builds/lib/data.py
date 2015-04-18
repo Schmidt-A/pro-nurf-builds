@@ -20,7 +20,6 @@ def get_bans(champ_id):
     data = models.Bans.objects(value__championId=champ_id)
     return data.first()
 
-@cached(60*60)
 def get_total_matches():
     data = models.Match.objects().count()
     return data

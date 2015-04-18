@@ -26,9 +26,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'hw&e&d0hyu4ui0ef8gg5l#xaql@0m*7dt1j4rd4l)#pbtqut7n'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['prourfbuilds.com', 'www.prourfbuilds.com']
 
 
 # Application definition
