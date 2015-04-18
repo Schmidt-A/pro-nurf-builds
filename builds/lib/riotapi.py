@@ -32,11 +32,12 @@ def champ_data(name):
 
 @cached(60*60)
 def items_data():
-    payload = {'itemData': 'groups,image,tags', 'api_key': APIKEY}
+    payload = {'itemListData': 'groups,image,tags', 'api_key': APIKEY}
     url = URL_BASE.format('item')
 
     r = requests.get(url, params=payload)
-    return r.json()['data']
+    data = r.json()['data']
+    return data
 
 def item_data(item_id):
     data = items_data()[item_id]
