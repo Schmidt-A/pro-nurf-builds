@@ -26,7 +26,10 @@ def index(request):
 
     sorted_data = OrderedDict(sorted(return_data.items()))
 
-    return render_to_response('champions.html', {'data': sorted_data})
+    return_data['data'] = sorted_data
+    return_data['games'] = data.get_total_matches()
+
+    return render_to_response('champions.html', return_data)
 
 
 def champ_info(request, name):
